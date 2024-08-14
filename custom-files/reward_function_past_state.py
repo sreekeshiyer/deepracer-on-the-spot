@@ -1,6 +1,6 @@
 class PARAMS:
     prev_speed = None
-    prev_steering_angle = None 
+    prev_steering_angle = None
     prev_steps = None
     prev_direction_diff = None
     prev_normalized_distance_from_route = None
@@ -77,3 +77,12 @@ def reward_function(params):
     # 4. Unpardonable Actions
     if is_offtrack or direction_diff > DIRECTION_THRESHOLD:
         reward = 1e-3  # minimum reward for going off track or bad direction difference
+
+    # Update the stored state in PARAMS
+    PARAMS.prev_speed = speed
+    PARAMS.prev_steering_angle = steering_angle
+    PARAMS.prev_steps = steps
+    PARAMS.prev_direction_diff = direction_diff
+    PARAMS.prev_normalized_distance_from_route = normalized_distance_from_route
+
+    return float(reward)
